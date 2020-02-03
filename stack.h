@@ -24,7 +24,7 @@ static inline void delStack(stack *s) {
   return;
 }
 
-static inline bool emptyS(stack *s) { return s->top == 0; }
+static inline bool emptyStack(stack *s) { return s->top == 0; }
 
 void printStack(stack *);
 

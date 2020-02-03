@@ -9,9 +9,11 @@
 #include "set.h"
 #include "stack.h"
 
-#define A ('A' - 'A')
-#define Z ('Z' - 'A')
-#define SIZE ('Z' - 'A' + 1)
+#define A	('A' - 'A')
+#define Z	('Z' - 'A')
+#define SIZE	('Z' - 'A' + 1)
+
+#define LINE 1024
 
 void zero(uint32_t n, bool m[n][n]) {
   for (uint32_t i = 0; i < n; i += 1) {
@@ -20,8 +22,6 @@ void zero(uint32_t n, bool m[n][n]) {
     }
   }
 }
-
-#define LINE 1024
 
 void fillGraph(FILE *f, bool directed, uint32_t n, bool m[n][n]) {
   char buffer[LINE];
@@ -55,12 +55,12 @@ static set visited = 0;
 
 static stack *path;
 
-static uint32_t shortest = UINT32_MAX;
-static uint32_t length = 0;
+static uint32_t shortest = UINT32_MAX, length = 0, attempts = 0;
 
 void DFS(uint32_t n, bool graph[n][n]) {
+  attempts += 1;
   visited = insertSet(n, visited);
-  (void)push(path, &n);
+  (void) push(path, &n);
   length += 1;
   if (n == Z) {
     shortest = length < shortest ? length : shortest;
@@ -72,7 +72,7 @@ void DFS(uint32_t n, bool graph[n][n]) {
       DFS(m, graph);
     }
   }
-  (void)pop(path, &n);
+  (void) pop(path, &n);
   visited = deleteSet(n, visited);
   length -= 1;
   return;
@@ -115,18 +115,17 @@ int main(int argc, char **argv) {
 
   zero(SIZE, graph); fillGraph(input, directed, SIZE, graph);
 
-  if (printMaze) {
-    printGraph(SIZE, graph);
-  }
+  if (printMaze) { printGraph(SIZE, graph); }
 
   path = newStack();
   DFS(A, graph);
   delStack(path);
 
   if (shortest < UINT32_MAX) {
-    printf("Shortest path %" PRIu32 "\n", shortest);
+    printf("Shortest path is %" PRIu32 " with %" PRIu32 " false steps.\n",
+           shortest, attempts - shortest);
   } else {
-    printf("No path found!\n");
+    printf("No path found in %" PRIu32 " steps!\n", attempts);
   }
 
   fclose(input);

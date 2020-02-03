@@ -17,7 +17,7 @@ stack *newStack() {
     }
   }
   free(s);
-  return (void *)0;
+  return (void *) 0;
 }
 
 bool pop(stack *s, item *i) {
@@ -43,10 +43,9 @@ bool push(stack *s, item *i) {
   return false;
 }
 
-static char alpha[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 void printStack(stack *s) {
-  if (!emptyS(s)) {
+  const char alpha[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (!emptyStack(s)) {
     printf("%c", alpha[s->entries[0]]);
     for (uint32_t i = 1; i < s->top; i += 1) {
       printf(" -> %c", alpha[s->entries[i]]);
