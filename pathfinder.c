@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
   delStack(path);
 
   if (shortest < UINT32_MAX) {
-    printf("Shortest path is %" PRIu32 " of (%" PRIu32 ") with %" PRIu32 " false steps.\n",
+    printf("Shortest path is %" PRIu32 " (of %" PRIu32 ") with %" PRIu32 " false steps.\n",
            shortest, pathCount, attempts - shortest);
   } else {
     printf("No path found in %" PRIu32 " steps!\n", attempts);
