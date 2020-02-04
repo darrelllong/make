@@ -55,7 +55,7 @@ static set visited = 0;
 
 static stack *path;
 
-static uint32_t shortest = UINT32_MAX, length = 0, attempts = 0;
+static uint32_t shortest = UINT32_MAX, length = 0, attempts = 0, pathCount = 0;
 
 void DFS(uint32_t n, bool graph[n][n]) {
   attempts += 1;
@@ -63,6 +63,7 @@ void DFS(uint32_t n, bool graph[n][n]) {
   (void) push(path, &n);
   length += 1;
   if (n == Z) {
+    pathCount += 1;
     shortest = length < shortest ? length : shortest;
     printf("Path: ");
     printStack(path);
@@ -122,8 +123,8 @@ int main(int argc, char **argv) {
   delStack(path);
 
   if (shortest < UINT32_MAX) {
-    printf("Shortest path is %" PRIu32 " with %" PRIu32 " false steps.\n",
-           shortest, attempts - shortest);
+    printf("Shortest path is %" PRIu32 " of (%" PRIu32 ") with %" PRIu32 " false steps.\n",
+           shortest, pathCount, attempts - shortest);
   } else {
     printf("No path found in %" PRIu32 " steps!\n", attempts);
   }
