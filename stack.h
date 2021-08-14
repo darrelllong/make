@@ -1,5 +1,5 @@
-#ifndef _STACK_H
-#define _STACK_H
+#pragma once
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -27,5 +27,3 @@ static inline void delStack(stack *s) {
 static inline bool emptyStack(stack *s) { return s->top == 0; }
 
 void printStack(stack *);
-
-#endif
